@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  my_sql:
+    image: mysql:8
+    restart: always
+    environment:
+       MYSQL_ROOT_PASSWORD: root
+       MYSQL_DATABASE: my_sql
+    ports:
+      - "3306:3306"
+    volumes:
+      - my-db:/var/lib/mysql
+    networks:
+      - link-db
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - "8001:8080"
+    depends_on:
+      - my_sql
+volumes:
+  my-db:
+    driver: local
+networks:
+  link-db: {}
+
